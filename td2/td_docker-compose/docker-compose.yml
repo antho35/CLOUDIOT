@@ -1,0 +1,11 @@
+proxy:
+   image: imgproxy
+   ports:
+   - 80:80
+   links:
+   - site1
+   - site2
+site1:
+   image: nginx
+site2:
+   image: nginx

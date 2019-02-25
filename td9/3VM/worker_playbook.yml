@@ -1,0 +1,16 @@
+- hosts: all
+  gather_facts: false
+   # *Become* root
+  become: true
+   # Speeds up the script
+  gather_facts: false
+
+  tasks:
+     # Include the Docker installation Ansible play file (empty for now)
+     - include: install_docker.yml
+
+     - name: swarm join
+       shell: docker swarm join --token $(cat /vagrant/worker_token) 12.0.0.2:2377
+
+     - name: Print some dummy thing
+       shell: echo "It works!"

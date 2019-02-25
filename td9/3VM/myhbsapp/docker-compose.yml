@@ -1,0 +1,50 @@
+version: '2'
+
+
+services:
+  web:
+    image: 127.0.0.1:5000/myhbsapp
+    build: .
+    ports:
+     - "3000:3000"
+
+  redis:
+    image: "redis:alpine"
+    volumes:
+      - "./myvolredis:/data"
+
+  reverse-proxy:
+    image: traefik # The official Traefik docker image
+    command: --web --web.metrics.prometheus --web.metrics.prometheus.buckets="0.1,0.3,1.2,5.0" --docker --docker.swarmmode --docker.domain=myhbsapp.com --docker.watch --logLevel=WARNING
+    ports:
+      - "80:80"     # The HTTP port
+      - "8080:8080" # The Web UI (enabled by --api)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+
+  puppeteer:
+    image: alekzonder/puppeteer:latest
+    build: ./puppeteer
+    volumes:
+      - "./puppeteer/screenshots:/screenshots"
+      - "./puppeteer:/app/index.js"
+
+
+  viz:
+    image: dockersamples/visualizer
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    ports:
+      - "8084:8080"
+
+  minio:
+    image: minio/minio
+    command: minio server /data
+    volumes:
+      - "./data:/data"
+    ports:
+      - "9000:9000"
+
+    environment:
+      MINIO_ACCESS_KEY: myminio
+      MINIO_SECRET_KEY: myminio123

@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  web:
+    image: 127.0.0.1:5000/myhbsapp
+    build: .
+    ports:
+     - "3000:3000"
+  redis:
+    image: "redis:alpine"
+    volumes:
+      - "./myvolredis:/data"
+  puppeteer:
+    image: 127.0.0.1:5000/puppeteer
+    build: ./puppeteer
+    ports:
+      - "4000:4000"
+    volumes:
+      - "./puppeteer/screenshots:/screenshots"
+  minio:
+    image: minio/minio
+    command: minio server /data
+    volumes:
+      - "./data:/data"
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: myminio
+      MINIO_SECRET_KEY: myminio123

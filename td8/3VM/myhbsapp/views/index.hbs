@@ -1,0 +1,8 @@
+<h3>Search Albums</h3>
+{{#if error}} <span>{{error}}</span>{{/if}}
+<form class="form-inline" method="POST" action="/album/search">
+  <div class="form-group">
+    <input type="text" id="searchalbum" name="id" class="form-control" placeholder="Search Albums By ID">
+  </div>
+  <input type="submit" id="btnsearch" class="btn btn-primary" value="Search">
+</form>

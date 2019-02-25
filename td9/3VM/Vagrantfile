@@ -1,0 +1,40 @@
+
+Vagrant.configure("2") do |config|
+  # Define box `manager'
+ 	config.vm.define "manager" do |manager|
+ 		manager.vm.hostname = "manager"
+ 		manager.vm.box = "ubuntu/xenial64"
+    manager.vm.network "private_network", ip: "12.0.0.2"
+    manager.vm.provision "ansible" do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "manager_playbook.yml"
+      ansible.extra_vars = {
+      ansible_python_interpreter: "/usr/bin/python3",
+      manager_ip: "12.0.0.2"
+    }
+    # Profitez-en pour mettre plus de "verbose" :
+    ansible.verbose = "vvv"
+    end
+ 	end
+
+ 	# Define boxes `worker-1' and `worker-2' with a for-loop
+ 	(1..2).each do |i|
+ 		config.vm.define "worker-#{i}" do |worker|
+ 			worker.vm.hostname = "worker-#{i}"
+ 			worker.vm.box = "ubuntu/xenial64"
+      worker.vm.network "private_network", ip: "12.0.0.#{i+2}"
+      worker.vm.provision "ansible" do |ansible|
+        ansible.verbose = "v"
+        ansible.playbook = "worker_playbook.yml"
+        ansible.extra_vars = {
+        ansible_python_interpreter: "/usr/bin/python3",
+        manager_ip: "12.0.0.2"
+      }
+      # Profitez-en pour mettre plus de "verbose" :
+      ansible.verbose = "vvv"
+      end
+ 		end
+ 	end
+
+
+end

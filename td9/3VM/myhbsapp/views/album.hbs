@@ -1,0 +1,45 @@
+
+<!--Carousel Wrapper-->
+<div id="carousel-with-lb" class="carousel slide carousel-multi-item" data-ride="carousel">
+
+  <!--Slides and lightbox-->
+
+  <div class="carousel-inner mdb-lightbox" role="listbox">
+    <div id="mdb-lightbox-ui"></div>
+    <!--First slide-->
+    <div class=" carousel-item active text-center">
+      <figure class="col-md-4 d-md-inline-block">
+        <a href="{{album.photo1}}" data-size="1600x1067"><!--/images/île/île1.jpg-->
+          <img src="{{album.photo1}}" id="img1" class="img-fluid">
+        </a>
+      </figure>
+
+      <figure class="col-md-4 d-md-inline-block">
+        <a href="{{album.photo2}}" data-size="1600x1067">
+          <img src="{{album.photo2}}" id="img2" class="img-fluid">
+        </a>
+      </figure>
+
+      <figure class="col-md-4 d-md-inline-block">
+        <a href="{{album.photo3}}" data-size="1600x1067">
+          <img src="{{album.photo3}}" id="img3" class="img-fluid">
+        </a>
+      </figure>
+      <figure class="col-md-4 d-md-inline-block">
+        <a href="{{album.photo4}}" data-size="1600x1067">
+          <img src="{{album.photo4}}" id="img4" class="img-fluid">
+        </a>
+      </figure>
+      <h1> {{album.Titre}} </h1>
+      <h2> {{album.Description}} </h2>
+      <a class="btn btn-primary" id="back" href="/">Back</a></br>
+      <form method="POST" action="/album/delete/{{album.id}}?_method=DELETE">
+        <input type="submit" id="delete" class="btn btn-danger pull-right" value="Delete">
+      </form>
+    </div>
+    <!--/.First slide-->
+  </div>
+  <!--/.Slides-->
+
+</div>
+<!--/.Carousel Wrapper-->

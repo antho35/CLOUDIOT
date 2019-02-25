@@ -1,0 +1,29 @@
+- name: Update all packages to the latest version
+  apt:
+   upgrade: dist
+
+- name: download key for docker
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+- name: fingerprint
+  apt_key:
+   id: 0EBFCD88
+
+- name : add repo
+  apt_repository:
+   repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+
+- name: install docker
+  apt:
+   name: docker-ce
+   state: latest
+   update_cache: yes
+
+# sudo apt-get install docker-compose=1.8.*
+- name: Install docker-compose
+  apt:
+    name: docker-compose=1.8.*
+    state: present
+    update_cache: yes
+  tags:
+    - docker

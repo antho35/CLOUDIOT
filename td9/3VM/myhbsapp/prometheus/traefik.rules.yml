@@ -1,0 +1,11 @@
+groups:
+- name: traefik.rules.yml
+  rules:
+  - alert: average_response_time
+    expr: sum(traefik_entrypoint_request_duration_seconds_sum) / sum(traefik_entrypoint_requests_total) * 1000 > 5.6
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      description: average_response_time is above your SLA
+      summary: average_response_time

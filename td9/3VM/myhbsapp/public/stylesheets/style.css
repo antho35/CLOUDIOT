@@ -1,0 +1,15 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+li.secondary-color.active{
+  background-color: #000000;
+}
+
+li.secondary-color{
+  background-color: #808080;
+}
